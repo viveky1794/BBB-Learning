@@ -60,6 +60,7 @@ int write_trigger_values(uint8_t led_no, char *value)
 		return -1;
 	}
 	
+	class(fd);
 	return 0;
 
 }
