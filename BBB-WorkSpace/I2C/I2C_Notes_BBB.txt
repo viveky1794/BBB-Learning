@@ -1,0 +1,60 @@
+
+
+	@	I2C Communication with BeagleBone 
+	
+		+	There are 3 I2C bues on BeagleBone according to AM335x Technical reference.
+			-	i2c-0 :	0x44E0_B000
+			-	i2c-1 : 0x4802_A000
+			-	i2c-2 : 0x4819_C000
+			
+		+	i2c-0 -->> bus is not accessible on header pins
+		+	i2c-1 -->> bus is utiziled for reading EEPROMs.
+		+	i2c-2 -->> bus we will use.
+		
+	@	Linux I2C Tool :
+		
+		+	i2cdetect -l
+						-->> Will shows all usable i2c buses.
+						
+		+	i2cdetect -r 2
+						-->> it will connect your sensor device with i2c-2 bus.
+							and show the address of device.
+							
+		+	Read and Write from i2c bus :
+			-	i2cset -y 2 0x68 0xf4 0x34     
+				-->> You can read more about the i2cset at https://linux.die.net/man/8/i2cset
+				
+			-	i2cdump -y 2 0x68 w
+				-->> Read more about i2cdump here: https://linux.die.net/man/8/i2cdump
+			
+			-	i2cget -y 2 0x68 0x87
+				-->>  more information for i2cget: https://linux.die.net/man/8/i2cget.
+				
+				
+				
+				
+				
+	@	Header-Pins :
+		--------------
+		+	Header-Pins : P9-19 -->> I2C2_SCL
+		+	Header-Pins : P9-20 -->> I2C2_SDA
+				
+				
+	@	Linux OS device file for I2C :
+
+		#define I2C_DEVICE_FILE   "/dev/i2c-2"
+	
+	
+	===========================================================================
+	
+							Coding instructions	:
+	
+	===========================================================================
+	
+	+	open device file of i2c bus using "open" command.
+	+	set slave address using "ioctl" command.
+	+ 	Please handle errors appropirately.
+	+	"write" command use to write into i2c file.
+	+ 	"read" command use to read from i2c file. but this operation execute 
+		in 2 processes. First write byte address with read bit set. Then read
+		data from device.
