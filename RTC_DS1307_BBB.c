@@ -108,7 +108,7 @@ int main()
 	}
 	
 	// 3. Write Time into DS1307 registors.
-		setClock(10, 45, 45 );
+		setClock( 0x06, 0x15, 0x1C );
 	
 	while(1)
 	{
