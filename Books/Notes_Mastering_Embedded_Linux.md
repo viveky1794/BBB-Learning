@@ -142,3 +142,19 @@ most mainstream distributions.
 > 3. There is more information about the Linux implementation of I2C in
 Documentation/i2c/dev-interface. The host controller drivers are in
 drivers/i2c/busses.
+
+# Serial Peripheral Interface (SPI)
+> There is a generic SPI device driver, which you
+can enable through the kernel configuration CONFIG_SPI_SPIDEV. It creates a device
+node for each SPI controller, which allows you to access SPI chips from user
+space. The device nodes are named spidev[bus].[chip select]:
+
+> $ ls -l /dev/spi*
+
+> crw-rw---- 1 root root 153, 0 Jan 1 00:29 /dev/spidev1.0
+
+>For examples of using the spidev interface, refer to the example code in
+Documentation/spi.
+
+ss
+
